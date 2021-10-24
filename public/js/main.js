@@ -17,14 +17,18 @@ seDeplacer(depart, arrivee) {
 
 //######### PAYER ARTICLES ####################
 payerArticle(ingredients){
-    this.argent = this.argent - ingredients.prix
-
+    personnes.argent = personnes.argent - ingredients.prix
+    if (personnes.argent == 0) {
+        console.log(`${personnes.nom}` +" achete " +`${el.nom}` +" pour " +`${el.prix}` +" euro");
+    }else {
+        console.log(`${personnes.nom} rentre à la maison car pas assez d'argent.`);
+    }
 }
 
-//############# COUPER #######################
-couper(){;
-    epicerie.ingredient.etat = "coupé"
-}
+//############# COUPER INGRÉDIENTS ########################
+    couper(){
+        epicerie.ingredient.etat = "coupé"
+    }
 }
 
 //##################### INGRÉDIENTS CLASS ####################
@@ -92,14 +96,17 @@ let outils = {
 //############################# DÉBUT OMELETTE ############################################
 personnes.seDeplacer(epicerie,maison);
 console.log(`${maison.personnes} est actuellement à la ${maison.nom}.`);
+// console.log(maison);
 
 //####################### DIRECTION L'ÉPICERIE a l'epicerie ####################
 personnes.seDeplacer(maison,epicerie);
 console.log(`${epicerie.personnes} est parti à l'${epicerie.nom}.`);
+// console.log(maison);
 
 //################### MON PANIER DANS LA MAIN DROITE #######################
-personnes.mainDroite.push(epicerie.panniers);
-console.log(`${personnes.nom} a pris un ${epicerie.panniers[0].type}.`);   
+epicerie.panniers.push(personnes.mainDroite);
+console.log(`${personnes.nom} a pris un ${epicerie.panniers[0].type}.`); 
+console.log(personnes.mainDroite);  
 
 //###################### PRENDRE LES INGRÉDIENTS 1 PAR 1 ##################
 ingredientFull.forEach(el => {
@@ -108,8 +115,7 @@ ingredientFull.forEach(el => {
 
 //################ PAYER LES ARTICLES #################
 ingredientFull.forEach(el => {
-    console.log(personnes.nom+" achete "+el.nom+" pour "+el.prix+" euro");
-    personnes.payerArticle(el);
+    console.log(personnes.payerArticle(el));
 });
 
 //################## CE QUI ME RESTE COMME ARGENT ####################
@@ -126,8 +132,8 @@ ingredientFull.forEach(el => {
 });
 
 //########### VÉRIFIER QUE LE PANIER EST VIDE ####################    
-personnes.mainDroite[0].contenu = [];
-console.log(personnes.mainDroite[0].contenu);
+personnes.mainDroite[0]
+console.log(personnes.mainDroite[0]);
 
 //############### RETOURNER LE PANIER A L'EPICERIE #########################
 personnes.seDeplacer(maison,epicerie);
@@ -152,10 +158,16 @@ bol.contenu.forEach(el => {
 });
 
 //############ MÉLANGER ##################
+//A CORRIGER
+// Ingredients.push(bol)
 bol.melanger('omelette');
 console.log("Nous avons le résultat de tout ingrédients mélangés dans le bol.");
+console.log(bol);
 
 //############ VERSER DANS LA POELE ET VIDER LE BOL ################ 
-poêle.contenu.push(bol.contenu[0]);
-bol.contenu.splice(0,1);
+bol.contenu.push(ingredientFull)
+// poêle.contenu.push(bol.contenu[0]);
+// bol.contenu.splice(0,1);
 console.log("On verse le contenu du bol dans la poêle.");
+poêle.contenu.push(bol.contenu);
+console.log(poêle);
